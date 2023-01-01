@@ -50,47 +50,9 @@
                 </div>
                 <div class="row mt-5">
                     <div class="d-flex justify-content-center">
-{#                        {% if totalPage > 1 %}#}
-{#                        <ul class="pagination">#}
-{#                            #}{# `«` arrow  #}
-{#                            <li {{ currentPage == 1 ? 'class="page-item disabled"' }}>#}
-{#                                <a href="{{ path('articles', {page: currentPage-1 < 1 ? 1 : currentPage-1}) }}" class="page-link">«</a>#}
-{#                            </li>#}
-
-{#                            #}{# Render each page number #}
-{#                            {% if totalPage <= 10 %}#}
-{#                                {% for i in 1..totalPage %}#}
-{#                                    <li {{ currentPage == i ? 'class="page-item active"' }}>#}
-{#                                        <a href="{{ path('articles', {page: i}) }}" class="page-link">{{ i }}</a>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                            {% else %}#}
-{#                                {% for i in 1..totalPage %}#}
-{#                                    {% if (currentPage) %}#}
-
-
-{#                                    <li {{ currentPage == i ? 'class="page-item active"' }}>#}
-{#                                        <a href="{{ path('articles', {page: i}) }}" class="page-link">{{ i }}</a>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-
-{#                            {% endif %}#}
-
-{#                            #}{# `»` arrow #}
-{#                            <li {{ currentPage == totalPage ? 'class="page-item disabled"' }}>#}
-{#                                <a href="{{ path('articles', {page: currentPage+1 <= totalPage ? currentPage+1 : currentPage}) }}" class="page-link">»</a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </div>#}
-
-{#                    {% endif %}#}
-
-
                         {% if totalPage > 1 %}
-
                             {# Number of page around current page+1 #}
                             {% set nearbyPagesLimit = 7 %}
-
                             <div>
                                 <ul class="pagination">
                                     {% if currentPage != 1 %}

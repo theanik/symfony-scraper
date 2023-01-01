@@ -7,6 +7,8 @@ use App\Message\ScrapDataBroker;
 use App\Scraper\Source\Contracts\SourceInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeoutException;
 use Facebook\WebDriver\WebDriverBy;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -14,13 +16,12 @@ use Symfony\Component\Panther\Client;
 
 class Scraper
 {
-    public $client;
+    public Client $client;
 
-    public $bus;
+    public MessageBusInterface $bus;
 
     public function __construct(MessageBusInterface $bus)
     {
-//        $this->client->close();
         $this->client = Client::createChromeClient(__DIR__.'/../../drivers/chromedriver', [
             '--headless',
             '--no-sandbox',
@@ -31,6 +32,10 @@ class Scraper
         $this->bus = $bus;
     }
 
+    /**
+     * @throws NoSuchElementException
+     * @throws TimeoutException
+     */
     public function scrap(SourceInterface $source): bool
     {
         $crawler = $this->client->request('GET', $source->getUrl());
