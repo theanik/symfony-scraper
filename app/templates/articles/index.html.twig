@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <header>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <img src="https://appcake.info/_next/static/media/appcake_logo.601d0972.gif" alt="" height="40" width="40">
+                    <strong>AppCake Articles</strong>
+                </a>
+                <a href="{{ path('app_logout') }}" class="btn btn-info">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="py-2 text-center container">
+            <div class="row py-lg-2">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h3 class="fw-light">AppCake Articles</h3>
+                    <p class="lead text-muted">Welcome {{ user.username }}</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for article in articles %}
+                        <div class="col">
+                            <div class="card m-2 p-0 h-100">
+                                <img class="card-img-top" src="{{ article.image }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ article.title }}</h5>
+                                    <p class="card-text">{{ article.description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                                        </div>
+                                        <small class="text-muted bo">{{ article.date|date('F d, Y') }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row mt-5">
+                    <div class="d-flex justify-content-center">
+{#                        {% if totalPage > 1 %}#}
+{#                        <ul class="pagination">#}
+{#                            #}{# `«` arrow  #}
+{#                            <li {{ currentPage == 1 ? 'class="page-item disabled"' }}>#}
+{#                                <a href="{{ path('articles', {page: currentPage-1 < 1 ? 1 : currentPage-1}) }}" class="page-link">«</a>#}
+{#                            </li>#}
+
+{#                            #}{# Render each page number #}
+{#                            {% if totalPage <= 10 %}#}
+{#                                {% for i in 1..totalPage %}#}
+{#                                    <li {{ currentPage == i ? 'class="page-item active"' }}>#}
+{#                                        <a href="{{ path('articles', {page: i}) }}" class="page-link">{{ i }}</a>#}
+{#                                    </li>#}
+{#                                {% endfor %}#}
+{#                            {% else %}#}
+{#                                {% for i in 1..totalPage %}#}
+{#                                    {% if (currentPage) %}#}
+
+
+{#                                    <li {{ currentPage == i ? 'class="page-item active"' }}>#}
+{#                                        <a href="{{ path('articles', {page: i}) }}" class="page-link">{{ i }}</a>#}
+{#                                    </li>#}
+{#                                {% endfor %}#}
+
+{#                            {% endif %}#}
+
+{#                            #}{# `»` arrow #}
+{#                            <li {{ currentPage == totalPage ? 'class="page-item disabled"' }}>#}
+{#                                <a href="{{ path('articles', {page: currentPage+1 <= totalPage ? currentPage+1 : currentPage}) }}" class="page-link">»</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+
+{#                    {% endif %}#}
+
+
+                        {% if totalPage > 1 %}
+
+                            {# Number of page around current page+1 #}
+                            {% set nearbyPagesLimit = 7 %}
+
+                            <div>
+                                <ul class="pagination">
+                                    {% if currentPage != 1 %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('articles', { 'page': 1 }) }}">First</a>
+                                        </li>
+                                    {% endif %}
+                                    {% for i in 1..totalPage %}
+                                        {% if 0 == (currentPage - nearbyPagesLimit) - loop.index %}
+                                            <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                                        {% elseif 0 == (currentPage + nearbyPagesLimit) - loop.index %}
+                                            <li class="disabled page-item"><a class="page-link" href="#">...</a></li>
+                                        {% elseif 0 < (currentPage - nearbyPagesLimit) - loop.index %}
+                                        {% elseif 0 > (currentPage + nearbyPagesLimit) - loop.index %}
+                                        {% else %}
+                                            <li {% if currentPage == loop.index  %} class=" page-item"{% endif %}>
+                                                <a class="page-link" href="{{ path('articles', { 'page': loop.index }) }}">{{ loop.index }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if currentPage != totalPage %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('articles', { 'page': totalPage }) }}">Last</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="mb-1">AppCake Article &copy; AppCake</p>
+        </div>
+    </footer>
+{% endblock %}
