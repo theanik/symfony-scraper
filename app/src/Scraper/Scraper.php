@@ -92,6 +92,7 @@ class Scraper
 
     public function __destruct()
     {
-        $this->client->close();
+        // $this->client->quit();
+        // $this->client->close();
     }
 }
