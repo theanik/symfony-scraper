@@ -18,7 +18,7 @@ class ArticleController extends AbstractController
         $currentPage = $request->get('page') ?? 1;
         $articlePaginator = $articleRepository->getPaginatedArticle($currentPage);
         $totalPage = ceil($articlePaginator->count() / $articleRepository->getPerPage());
-
+        // TODO:: caching mechanism in implementable
         $articles = $articlePaginator->getIterator();
 
         return $this->render('articles/index.html.twig', [
