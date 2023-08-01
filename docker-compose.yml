@@ -7,7 +7,7 @@ services:
         image: scaperapp
         container_name: app-php
         restart: always
-        working_dir: /var/www/
+        working_dir: /var/www/app/
         volumes:
             - ./:/var/www
         depends_on:
