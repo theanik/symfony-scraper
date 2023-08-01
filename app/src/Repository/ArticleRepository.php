@@ -19,8 +19,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    /**
+     * @var int
+     */
     public int $perPage = 12;
 
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
@@ -50,17 +56,28 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @param int $perPage
+     * @return $this
+     */
     public function setPerPage(int $perPage): self
     {
         $this->perPage = $perPage;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getPerPage(): int
     {
         return $this->perPage;
     }
 
+    /**
+     * @param $page
+     * @return Paginator
+     */
     public function getPaginatedArticle($page = 1)
     {
         $query = $this->createQueryBuilder('a')
@@ -72,33 +89,4 @@ class ArticleRepository extends ServiceEntityRepository
             ->setMaxResults($this->getPerPage());
         return $paginator;
     }
-
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

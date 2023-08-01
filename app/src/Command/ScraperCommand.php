@@ -10,20 +10,36 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ScraperCommand extends Command
 {
+    /**
+     * @var Scraper
+     */
     private Scraper $scraper;
 
+    /**
+     * @param Scraper $scraper
+     */
     public function __construct(Scraper $scraper)
     {
         parent::__construct();
         $this->scraper = $scraper;
     }
 
+    /**
+     * @return void
+     */
     protected function configure(): void
     {
         $this->setName('start:scrap')
             ->setDescription('Article scraping has been started');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     * @throws \Facebook\WebDriver\Exception\NoSuchElementException
+     * @throws \Facebook\WebDriver\Exception\TimeoutException
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->scraper->scrap(new TheWallStreetJournal());

@@ -2,24 +2,29 @@
 
 namespace App\Scraper;
 
-use App\Entity\Article;
 use App\Message\ScrapDataBroker;
 use App\Scraper\Source\Contracts\SourceInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\Exception\TimeoutException;
-use Facebook\WebDriver\WebDriverBy;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Panther\Client;
 
 class Scraper
 {
+    /**
+     * @var Client
+     */
     public Client $client;
 
+    /**
+     * @var MessageBusInterface
+     */
     public MessageBusInterface $bus;
 
+    /**
+     * @param MessageBusInterface $bus
+     */
     public function __construct(MessageBusInterface $bus)
     {
         $this->client = Client::createChromeClient(__DIR__.'/../../drivers/chromedriver', [
@@ -72,6 +77,8 @@ class Scraper
             });
             $this->bus->dispatch(new ScrapDataBroker($collection));
         }
+         $this->client->quit();
+         $this->client->close();
         return true;
     }
 
@@ -85,6 +92,10 @@ class Scraper
         return \DateTime::createFromFormat("F d, Y", $dateTime);
     }
 
+    /**
+     * @param string $paginationText
+     * @return int
+     */
     private function getTotalPaginationPage(string $paginationText): int
     {
         return explode(' ', $paginationText)[1] ?? 0;

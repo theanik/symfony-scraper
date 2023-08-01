@@ -9,15 +9,29 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class ScrapDataHandler implements MessageHandlerInterface
 {
+    /**
+     * @var ArticleRepository
+     */
     private ArticleRepository $articleRepository;
+    /**
+     * @var ManagerRegistry
+     */
     private ManagerRegistry $doctrine;
 
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param ManagerRegistry $doctrine
+     */
     public function __construct(ArticleRepository $articleRepository, ManagerRegistry $doctrine)
     {
         $this->articleRepository = $articleRepository;
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @param ScrapDataBroker $message
+     * @return void
+     */
     public function __invoke(ScrapDataBroker $message)
     {
         $entityManager = $this->doctrine->getManager();
