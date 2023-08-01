@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Scraper Articles{% endblock %}
 
 {% block body %}
     <header>
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a href="#" class="navbar-brand d-flex align-items-center">
-                    <img src="https://appcake.info/_next/static/media/appcake_logo.601d0972.gif" alt="" height="40" width="40">
-                    <strong>AppCake Articles</strong>
+                    <strong>Scraper Articles</strong>
                 </a>
                 <a href="{{ path('app_logout') }}" class="btn btn-info">Logout</a>
             </div>
@@ -20,7 +19,7 @@
         <section class="py-2 text-center container">
             <div class="row py-lg-2">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    <h3 class="fw-light">AppCake Articles</h3>
+                    <h3 class="fw-light">Scraper Articles</h3>
                     <p class="lead text-muted">Welcome {{ user.username }}</p>
                 </div>
             </div>
@@ -88,7 +87,7 @@
 
     <footer class="text-muted py-5">
         <div class="container">
-            <p class="mb-1">AppCake Article &copy; AppCake</p>
+            <p class="mb-1">Scraper Article &copy; Scraper</p>
         </div>
     </footer>
 {% endblock %}
